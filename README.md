@@ -20,3 +20,4 @@ Ahora los dos servicios tienen que procesar la información de forma independien
 - ¿Cómo afectan estos cambios a nuestro modelo de datos? ¿Qué queremos almecenar ahora? ¿Y cómo?
 - Modifica el registro de mensajes para que sea capaz de reflejar estos estados.
 
+
