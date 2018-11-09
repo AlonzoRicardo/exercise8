@@ -2,13 +2,12 @@ const kue = require("kue");
 const uuidv4 = require("uuid/v4");
 let queue = kue.createQueue();
 
-
 module.exports = function(req, res) {
   let uniqueId = uuidv4();
   let messObj = req.body;
   messObj.uuid = uniqueId;
   let job = queue
-    .create("msg", {
+    .create("new message", {
       messObj
     })
     .ttl(6000)

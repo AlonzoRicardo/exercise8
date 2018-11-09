@@ -1,8 +1,8 @@
 const kue = require("kue");
-const Message = require("../models/message");
-const getCredit = require("../clients/getCredit");
-const updateCreditTransaction = require("../transactions/updateCredit");
-const addToQ = require("./addToQ");
+const Message = require("../../models/message");
+const getCredit = require("../../clients/getCredit");
+const updateCreditTransaction = require("../../transactions/updateCredit");
+const addToQ = require("../queues/SaveSendQ");
 let queue = kue.createQueue();
 
 
@@ -17,8 +17,6 @@ function checkBalance(job, done) {
   return getCredit().then(result => {
     current_credit = result[0].amount;
     if (current_credit > 0) {
-      //console.log(current_credit);
-      //console.log(job.data);
       return true;
     } else {
       return false;
@@ -47,15 +45,13 @@ function decreaseBalance(job, enoughBalance) {
         cb(undefined, error);
       } else {
         addToQ(job, enoughBalance);
-        //post save and send message job
-        //saveMessageTransaction(messageParams, cb);
       }
     }
   );
 }
 
 
-queue.process("msg", function(job, done) {
+queue.process("new message", function(job, done) {
   let promise = Promise.resolve(checkBalance(job, done));
   promise
     .then(response => {

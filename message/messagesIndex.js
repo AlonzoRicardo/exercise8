@@ -1,13 +1,11 @@
 const http = require("http");
 const express = require("express");
-require('./src/queue/jobConsumer')
 const bodyParser = require("body-parser");
 const {
   Validator,
   ValidationError
 } = require("express-json-validator-middleware");
 
-const sendMessage = require("./src/controllers/sendMessage");
 const getMessages = require("./src/controllers/getMessages");
 
 const app = express();
@@ -36,22 +34,24 @@ const messageSchema = {
   }
 };
 
-const queue = require('./src/queue/queue')
+require('./src/queue/consumers/sendConsumer')
+require('./src/queue/queues/rollBackQ')
+const queue = require('./src/queue/queues/newMessageQ')
+
 
 app.post(
   "/messages",
   bodyParser.json(),
   validate({ body: messageSchema }),
   queue
-  //sendMessage
-);
-
-app.get("/messages", getMessages);
-
-app.use(function(err, req, res, next) {
-  console.log(res.body);
-  if (err instanceof ValidationError) {
-    res.sendStatus(400);
+  );
+  
+  app.get("/messages", getMessages);
+  
+  app.use(function(err, req, res, next) {
+    console.log(res.body);
+    if (err instanceof ValidationError) {
+      res.sendStatus(400);
   } else {
     res.sendStatus(500);
   }

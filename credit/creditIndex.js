@@ -1,6 +1,10 @@
 const http = require("http");
 const express = require("express");
-require('./src/queue/jobConsumer')
+
+require("./src/queue/consumers/checkCreditsConsumer");
+require("./src/queue/consumers/rollbackConsumer");
+require("./src/queue/queues/SaveSendQ");
+
 const bodyParser = require("body-parser");
 const {
   Validator,
@@ -14,7 +18,6 @@ const app = express();
 const validator = new Validator({ allErrors: true });
 const { validate } = validator;
 
-
 const creditSchema = {
   type: "object",
   required: ["amount"],
@@ -27,7 +30,6 @@ const creditSchema = {
     }
   }
 };
-
 
 app.post(
   "/credit",
