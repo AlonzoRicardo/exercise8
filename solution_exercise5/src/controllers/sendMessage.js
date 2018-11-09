@@ -30,10 +30,9 @@ module.exports = function(msgData, done) {
       };
 
       let postReq = http.request(postOptions);
-      //console.log(postReq);
+    
       
       postReq.on("response", postRes => {
-        //console.log(postRes, '<==');
         if (postRes.statusCode === 200) {
           console.log('enters 200')
           saveMessage(

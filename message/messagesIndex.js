@@ -1,6 +1,6 @@
 const http = require("http");
 const express = require("express");
-
+require('./src/queue/jobConsumer')
 const bodyParser = require("body-parser");
 const {
   Validator,

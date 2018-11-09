@@ -1,9 +1,8 @@
 const kue = require("kue");
 const uuidv4 = require("uuid/v4");
-
 let queue = kue.createQueue();
-//const sendMessage = require("../controllers/sendMessage");
-//1
+
+
 module.exports = function(req, res) {
   let uniqueId = uuidv4();
   let messObj = req.body;
@@ -21,12 +20,3 @@ module.exports = function(req, res) {
 queue.on("job enqueue", function(id, type) {
   console.log("Job %s got queued of type %s", id, type);
 });
-
-/* queue.on('send message', function(job, done) {
-  console.log('sending message');
-}) */
-
-/* queue.process("msg", function(job, done) {
-  console.log("entra");
-  done();
-});  */

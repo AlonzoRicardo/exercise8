@@ -1,20 +1,13 @@
 const http = require("http");
 const saveMessage = require("../clients/saveMessage");
-//const getCredit = require("../clients/getCredit");
 
 const random = n => Math.floor(Math.random() * Math.floor(n));
 
 module.exports = function(msgData, done) {
   const entireMsg = msgData;
-  const body = JSON.stringify(msgData.messObj);
-  //var query = getCredit();
+  const body = JSON.stringify(msgData.job);
 
-  query.exec(function(err, credit) {
-    if (err) return console.log(err);
-
-    current_credit = credit[0].amount;
-
-    if (current_credit > 0) {
+    if (msgData.isThereBalance) {
       const postOptions = {
         // host: "exercise6_messageapp_1",
         // host: "messageapp",
@@ -86,5 +79,5 @@ module.exports = function(msgData, done) {
     } else {
       console.log("No credit error");
     }
-  });
+  
 };
