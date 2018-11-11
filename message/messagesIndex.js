@@ -36,8 +36,8 @@ const messageSchema = {
 };
 
 require("./src/queue/consumers/sendConsumer");
-require("./src/queue/queues/rollBackQ");
-const queue = require("./src/queue/queues/newMessageQ");
+require("./src/queue/enqueuers/enqueueRollBack");
+const queue = require("./src/queue/enqueuers/enqueueCheckBalance");
 
 app.post(
   "/messages",

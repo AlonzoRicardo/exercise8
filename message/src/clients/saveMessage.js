@@ -1,6 +1,6 @@
 const Message = require("../models/message");
 const saveMessageTransaction = require("../transactions/saveMessage");
-const rollBack = require("../queue/queues/rollBackQ");
+const rollBack = require("../queue/enqueuers/enqueueRollBack");
 
 module.exports = function(messageParams, cb) {
   const MessageModel = Message();

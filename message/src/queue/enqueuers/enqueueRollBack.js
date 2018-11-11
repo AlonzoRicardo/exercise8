@@ -4,7 +4,7 @@ const debug = require("debug")("message:queue");
 
 module.exports = function(messageParams) {
   let job3 = queue
-    .create("rollBack", {
+    .create("roll back", {
       jobWithAproval: messageParams
     })
     .ttl(6000)

@@ -2,7 +2,7 @@ const kue = require("kue");
 const Message = require("../../models/message");
 const getCredit = require("../../clients/getCredit");
 const updateCreditTransaction = require("../../transactions/updateCredit");
-const addToQ = require("../queues/SaveSendQ");
+const addToQ = require("../enqueuers/enqueueSendMessage");
 let queue = kue.createQueue();
 const debugError = require("debug")("credit:error");
 
@@ -51,7 +51,7 @@ function decreaseBalance(job, enoughBalance) {
 }
 
 
-queue.process("new message", function(job, done) {
+queue.process("check balance", function(job, done) {
   let promise = Promise.resolve(checkBalance(job, done));
   promise
     .then(response => {

@@ -1,9 +1,9 @@
 const http = require("http");
 const express = require("express");
 
-require("./src/queue/consumers/checkCreditsConsumer");
-require("./src/queue/consumers/rollbackConsumer");
-require("./src/queue/queues/SaveSendQ");
+require("./src/queue/consumers/checkBalanceConsumer");
+require("./src/queue/consumers/rollBackConsumer");
+require("./src/queue/enqueuers/enqueueSendMessage");
 
 const bodyParser = require("body-parser");
 const {

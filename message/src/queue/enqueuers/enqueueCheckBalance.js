@@ -8,7 +8,7 @@ module.exports = function(req, res) {
   let messObj = req.body;
   messObj.uuid = uniqueId;
   let job = queue
-    .create("new message", {
+    .create("check balance", {
       messObj
     })
     .ttl(6000)

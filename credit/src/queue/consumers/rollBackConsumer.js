@@ -26,6 +26,6 @@ function rollBackCredit(job) {
   );
 }
 
-queue.process("rollBack", function(job, done) {
+queue.process("roll back", function(job, done) {
   rollBackCredit(job);
 });
