@@ -27,10 +27,11 @@ module.exports = function(msgData, done) {
 
     postReq.on("response", postRes => {
       if (postRes.statusCode === 200) {
-        console.log("enters 200");
         saveMessage(
           {
-            ...entireMsg,
+            destination: entireMsg.job.destination,
+            body: entireMsg.job.body,
+            uuid: entireMsg.job.uuid,
             status: "OK"
           },
           function(_result, error) {
@@ -45,7 +46,9 @@ module.exports = function(msgData, done) {
         console.error("Error while sending message");
         saveMessage(
           {
-            ...entireMsg,
+            destination: entireMsg.job.destination,
+            body: entireMsg.job.body,
+            uuid: entireMsg.job.uuid,
             status: "ERROR"
           },
           () => {
@@ -63,7 +66,9 @@ module.exports = function(msgData, done) {
 
       saveMessage(
         {
-          ...entireMsg,
+          destination: entireMsg.job.destination,
+          body: entireMsg.job.body,
+          uuid: entireMsg.job.uuid,
           status: "TIMEOUT"
         },
         () => {
@@ -72,11 +77,9 @@ module.exports = function(msgData, done) {
       );
     });
 
+    //postReq.on("error", () => {});
     postReq.write(body);
     postReq.end();
-    postReq.on("error", () => {
-      rollBack(entireMsg);
-    });
   } else {
     console.log("No credit error");
   }

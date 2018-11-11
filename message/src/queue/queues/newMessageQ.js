@@ -12,7 +12,7 @@ module.exports = function(req, res) {
     })
     .ttl(6000)
     .save(function(err) {
-      if (!err) res.send(`0--> queue entry number: ${job.id}`);
+      if (!err) res.send(`MessageId: ${job.data.messObj.uuid}`);
     });
 };
 
