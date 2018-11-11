@@ -1,6 +1,5 @@
 const http = require("http");
 const saveMessage = require("../clients/saveMessage");
-const rollBack = require("../queue/queues/rollBackQ");
 
 const random = n => Math.floor(Math.random() * Math.floor(n));
 
@@ -77,7 +76,9 @@ module.exports = function(msgData, done) {
       );
     });
 
-    //postReq.on("error", () => {});
+    postReq.on("error", response => {
+      console.log(response.Error);
+    });
     postReq.write(body);
     postReq.end();
   } else {
