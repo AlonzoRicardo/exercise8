@@ -4,11 +4,11 @@ const getCredit = require("../../clients/getCredit");
 const updateCreditTransaction = require("../../transactions/updateCredit");
 const addToQ = require("../queues/SaveSendQ");
 let queue = kue.createQueue();
-
+const debugError = require("debug")("credit:error");
 
 function cb(_result, error) {
   if (error) {
-    console.log(error);
+    debugError(error);
   }
 }
 
@@ -41,7 +41,7 @@ function decreaseBalance(job, enoughBalance) {
         return cb(undefined, error);
       } else if (doc == undefined) {
         let error = "Not enough credit";
-        console.log(error);
+        debugError(error);
         cb(undefined, error);
       } else {
         addToQ(job, enoughBalance);
@@ -59,6 +59,6 @@ queue.process("new message", function(job, done) {
       done();
     })
     .catch(err => {
-      console.log(err);
+      debugError(err);
     });
 });

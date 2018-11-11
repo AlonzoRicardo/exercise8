@@ -1,5 +1,6 @@
 const kue = require("kue");
 let queue = kue.createQueue();
+const debug = require("debug")("credit:queue");
 
 //job 2
 module.exports = (job, enoughBalance) => {
@@ -11,7 +12,6 @@ module.exports = (job, enoughBalance) => {
     })
     .ttl(6000)
     .save(function(err) {
-      console.log(`queue entry number: ${job2.id}`);
-      console.log(job2.data);
+      debug(`queue entry number: ${job2.id}`);
     });
 };

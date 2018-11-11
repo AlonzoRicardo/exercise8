@@ -1,6 +1,7 @@
 const kue = require("kue");
 const uuidv4 = require("uuid/v4");
 let queue = kue.createQueue();
+const debug = require("debug")("message:queue");
 
 module.exports = function(req, res) {
   let uniqueId = uuidv4();
@@ -17,5 +18,5 @@ module.exports = function(req, res) {
 };
 
 queue.on("job enqueue", function(id, type) {
-  console.log("Job %s got queued of type %s", id, type);
+  debug("Job %s got queued of type %s", id, type);
 });

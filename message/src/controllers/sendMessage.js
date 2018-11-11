@@ -1,5 +1,7 @@
 const http = require("http");
 const saveMessage = require("../clients/saveMessage");
+const debugError = require("debug")("message:error");
+const debugTimeout = require("debug")("message:timeout");
 
 const random = n => Math.floor(Math.random() * Math.floor(n));
 
@@ -35,14 +37,14 @@ module.exports = function(msgData, done) {
           },
           function(_result, error) {
             if (error) {
-              console.log(error);
+              debugError(error);
             } else {
               console.log(postRes.body);
             }
           }
         );
       } else {
-        console.error("Error while sending message");
+        debugError("Error while sending message");
         saveMessage(
           {
             destination: entireMsg.job.destination,
@@ -51,7 +53,7 @@ module.exports = function(msgData, done) {
             status: "ERROR"
           },
           () => {
-            console.log("Internal server error: SERVICE ERROR");
+            debugError("Internal server error: SERVICE ERROR");
           }
         );
       }
@@ -60,7 +62,7 @@ module.exports = function(msgData, done) {
     postReq.setTimeout(random(6000));
 
     postReq.on("timeout", () => {
-      console.error("Timeout Exceeded!");
+      debugTimeout("Timeout Exceeded!");
       postReq.abort();
 
       saveMessage(
@@ -71,17 +73,17 @@ module.exports = function(msgData, done) {
           status: "TIMEOUT"
         },
         () => {
-          console.log("Internal server error: TIMEOUT");
+          debugTimeout("Internal server error: TIMEOUT");
         }
       );
     });
 
     postReq.on("error", response => {
-      console.log(response.Error);
+      debugError('response.Error');
     });
     postReq.write(body);
     postReq.end();
   } else {
-    console.log("No credit error");
+    debugError("No credit error");
   }
 };

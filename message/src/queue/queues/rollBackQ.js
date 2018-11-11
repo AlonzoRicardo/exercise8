@@ -1,5 +1,6 @@
 const kue = require("kue");
 let queue = kue.createQueue();
+const debug = require("debug")("message:queue");
 
 module.exports = function(messageParams) {
   let job3 = queue
@@ -8,7 +9,7 @@ module.exports = function(messageParams) {
     })
     .ttl(6000)
     .save(function(err) {
-      if (!err) console.log('saved in queue job: ', job3.id, job3.type);
+      if (!err) debug('saved in queue job: ', job3.id, job3.type);
     });
 };
 

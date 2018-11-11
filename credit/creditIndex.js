@@ -48,5 +48,5 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(9008, function() {
-  console.log("CREDIT CONTAINER started on PORT 9008");
+  console.log("Credit Container started on PORT 9008");
 });

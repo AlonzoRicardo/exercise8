@@ -7,3 +7,5 @@ try
 .vscode
 
 solution_exercise5
+
+.env

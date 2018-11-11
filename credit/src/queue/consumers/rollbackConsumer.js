@@ -3,10 +3,11 @@ let queue = kue.createQueue();
 const updateCreditTransaction = require("../../transactions/updateCredit");
 const Message = require("../../models/message");
 
+
 function rollBackCredit(job) {
   const MessageModel = Message();
   let message = new MessageModel(job.data.jobWithAproval);
-  
+
   return updateCreditTransaction(
     {
       amount: { $gte: 1 },
