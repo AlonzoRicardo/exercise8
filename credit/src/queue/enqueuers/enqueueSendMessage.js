@@ -1,8 +1,7 @@
-const kue = require("kue");
-let queue = kue.createQueue();
+//const kue = require("kue");
+const queue = require("../../../creditIndex");
 const debug = require("debug")("credit:queue");
 
-//job 2
 module.exports = (job, enoughBalance) => {
   let isThereBalance = enoughBalance;
   let job2 = queue

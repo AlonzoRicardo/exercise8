@@ -8,6 +8,8 @@ module.exports = function(messageParams, cb) {
   if (message.status == "OK") {
     saveMessageTransaction(messageParams, cb);
   } else if (message.status == "ERROR") {
+    console.log('entra roll back');
+    
     rollBack(messageParams);
     cb();
   }

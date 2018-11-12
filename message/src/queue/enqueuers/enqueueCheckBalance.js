@@ -1,6 +1,6 @@
 const kue = require("kue");
+let queue = require('../../../messagesIndex');
 const uuidv4 = require("uuid/v4");
-let queue = kue.createQueue();
 const debug = require("debug")("message:queue");
 
 module.exports = function(req, res) {

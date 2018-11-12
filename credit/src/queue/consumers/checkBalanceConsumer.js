@@ -1,10 +1,11 @@
-const kue = require("kue");
+//const kue = require("kue");
+let queue = require('../../../creditIndex')
+const addToQ = require("../enqueuers/enqueueSendMessage");
 const Message = require("../../models/message");
 const getCredit = require("../../clients/getCredit");
 const updateCreditTransaction = require("../../transactions/updateCredit");
-const addToQ = require("../enqueuers/enqueueSendMessage");
-let queue = kue.createQueue();
 const debugError = require("debug")("credit:error");
+//let queue = kue.createQueue();
 
 function cb(_result, error) {
   if (error) {

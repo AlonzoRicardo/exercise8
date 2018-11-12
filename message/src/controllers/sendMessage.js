@@ -2,18 +2,19 @@ const http = require("http");
 const saveMessage = require("../clients/saveMessage");
 const debugError = require("debug")("message:error");
 const debugTimeout = require("debug")("message:timeout");
-
+//const rollBack = require("../queue/enqueuers/enqueueRollBack");
 const random = n => Math.floor(Math.random() * Math.floor(n));
 
 module.exports = function(msgData, done) {
   const entireMsg = msgData;
   const body = JSON.stringify(msgData.job);
+  console.log("2== entra send");
 
   if (msgData.isThereBalance) {
     const postOptions = {
       // host: "exercise6_messageapp_1",
-      // host: "messageapp",
-      host: "localhost",
+      host: "messageapp",
+      // host: "localhost",
       port: 3000,
       path: "/message",
       method: "post",
@@ -27,6 +28,7 @@ module.exports = function(msgData, done) {
     let postReq = http.request(postOptions);
 
     postReq.on("response", postRes => {
+      debugError(postRes.statusCode, "status code?????????");
       if (postRes.statusCode === 200) {
         saveMessage(
           {
@@ -78,9 +80,10 @@ module.exports = function(msgData, done) {
       );
     });
 
-    postReq.on("error", response => {
-      debugError('response.Error');
+    postReq.on("error", err => {
+      console.log(err, "<== error detected here");
     });
+
     postReq.write(body);
     postReq.end();
   } else {

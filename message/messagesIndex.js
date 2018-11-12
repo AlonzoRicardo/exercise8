@@ -6,9 +6,17 @@ const {
   ValidationError
 } = require("express-json-validator-middleware");
 
+const kue = require("kue");
+let queue = kue.createQueue({
+  redis: {
+    host: "redis"
+  }
+});
+module.exports = queue;
+
 const getMessages = require("./src/controllers/getMessages");
 const getMessageStatusById = require("./src/controllers/getMessageStatusById");
-
+const { getHostName } = require('./src/utils')
 const app = express();
 
 const validator = new Validator({ allErrors: true });
@@ -37,18 +45,21 @@ const messageSchema = {
 
 require("./src/queue/consumers/sendConsumer");
 require("./src/queue/enqueuers/enqueueRollBack");
-const queue = require("./src/queue/enqueuers/enqueueCheckBalance");
+const enqueue = require("./src/queue/enqueuers/enqueueCheckBalance");
 
+//End Points
 app.post(
   "/messages",
   bodyParser.json(),
   validate({ body: messageSchema }),
-  queue
+  enqueue
 );
 
 app.get("/messages/:id/status", getMessageStatusById);
 
 app.get("/messages", getMessages);
+
+app.get("/hostname", getHostName);
 
 app.use(function(err, req, res, next) {
   console.log(res.body);

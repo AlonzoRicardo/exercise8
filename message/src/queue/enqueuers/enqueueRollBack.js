@@ -1,5 +1,10 @@
 const kue = require("kue");
-let queue = kue.createQueue();
+/* let queue = kue.createQueue({
+  redis: {
+    host: "redis"
+  }
+}); */
+let queue = require('../../../messagesIndex');
 const debug = require("debug")("message:queue");
 
 module.exports = function(messageParams) {
@@ -9,8 +14,6 @@ module.exports = function(messageParams) {
     })
     .ttl(6000)
     .save(function(err) {
-      if (!err) debug('saved in queue job: ', job3.id, job3.type);
+      if (!err) debug("saved in queue job: ", job3.id, job3.type);
     });
 };
-
-

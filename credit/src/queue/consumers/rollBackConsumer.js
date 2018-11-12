@@ -1,8 +1,14 @@
-const kue = require("kue");
-let queue = kue.createQueue();
+/* const kue = require("kue");
+let queue = kue.createQueue({
+  redis: {
+    host: "redis"
+  }
+}); */
+
+//const kue = require("kue");
+let queue = require('../../../creditIndex')
 const updateCreditTransaction = require("../../transactions/updateCredit");
 const Message = require("../../models/message");
-
 
 function rollBackCredit(job) {
   const MessageModel = Message();

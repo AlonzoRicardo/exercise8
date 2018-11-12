@@ -1,33 +1,33 @@
 version: "3"
 services:
-  #message:
-  #  build: message/
-  #  ports:
-  #    - "9007:9007"
-  #  links:
-  #    - messageapp
-  #    - mongodb_message
-  #    - replica_message
-  #    - redis
-  #    - credit
-  #  depends_on:
-  #    - messageapp
-  #    - mongodb_message
-  #    - replica_message
-  #    - redis
-#
-  #credit:
-  #  build: credit/
-  #  ports:
-  #    - "9008:9008"
-  #  links:
-  #    - mongodb_credit
-  #    - replica_credit
-  #    - redis
-  #  depends_on:
-  #    - mongodb_credit
-  #    - replica_credit
-  #    - redis
+  message:
+    hostname: message1
+    build: message/
+    ports:
+      - "9007:9007"
+    links:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+      - credit
+    depends_on:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+  credit:
+    build: credit/
+    ports:
+      - "9008:9008"
+    links:
+      - mongodb_credit
+      - replica_credit
+      - redis
+    depends_on:
+      - mongodb_credit
+      - replica_credit
+      - redis
 
   messageapp:
     image: cabify/backend-bootcamp-messageapp
@@ -36,33 +36,33 @@ services:
 
   mongodb_credit:
     image: mongo
-    command: mongod --port 27018
+    command: mongod --port 27037
     volumes:
       - ./credit/data/db:/credit/data/db
     ports:
-      - 27018:27018
+      - 27037:27037
   replica_credit:
     image: mongo
-    command: mongod --port 27019
+    command: mongod --port 27038
     volumes:
       - ./credit/data/replica:/credit/data/replica
     ports:
-      - 27019:27019
+      - 27038:27038
 
   mongodb_message:
     image: mongo
-    command: mongod --port 27027
+    command: mongod --port 27017
     volumes:
       - ./message/data/db:/message/data/db
     ports:
-      - 27027:27027
+      - 27017:27017
   replica_message:
     image: mongo
-    command: mongod --port 27028
+    command: mongod --port 27018
     volumes:
       - ./message/data/replica:/message/data/replica
     ports:
-      - 27028:27028
+      - 27018:27018
 
   redis:
     image: redis
@@ -70,3 +70,6 @@ services:
       - 6379:6379
     volumes:
       - ./data/redis:/data/redis
+
+ 
+    

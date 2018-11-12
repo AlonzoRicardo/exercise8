@@ -1,9 +1,13 @@
 const http = require("http");
 const express = require("express");
+const kue = require("kue");
+let queue = kue.createQueue({
+  redis: {
+    host: "redis"
+  }
+});
 
-require("./src/queue/consumers/checkBalanceConsumer");
-require("./src/queue/consumers/rollBackConsumer");
-require("./src/queue/enqueuers/enqueueSendMessage");
+module.exports = queue;
 
 const bodyParser = require("body-parser");
 const {
@@ -46,6 +50,10 @@ app.use(function(err, req, res, next) {
     res.sendStatus(500);
   }
 });
+
+require("./src/queue/consumers/checkBalanceConsumer");
+require("./src/queue/consumers/rollBackConsumer");
+require("./src/queue/enqueuers/enqueueSendMessage");
 
 app.listen(9008, function() {
   console.log("Credit Container started on PORT 9008");
