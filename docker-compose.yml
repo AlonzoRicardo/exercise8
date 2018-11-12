@@ -103,6 +103,13 @@ services:
       - 6379:6379
     volumes:
       - ./data/redis:/data/redis
-
+  
+  haproxy:
+    image: haproxy
+    build: haproxy/
+    ports:
+      - 80:80
+    expose:
+      - 80
  
     
