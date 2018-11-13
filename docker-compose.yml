@@ -16,7 +16,40 @@ services:
       - mongodb_message
       - replica_message
       - redis
- 
+  message2:
+    hostname: message2
+    build: message/
+    ports:
+      - "9009:9007"
+    links:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+      - credit
+    depends_on:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+
+  message3:
+    hostname: message3
+    build: message/
+    ports:
+      - "9010:9007"
+    links:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+      - credit
+    depends_on:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+
   credit:
     build: credit/
     ports:
