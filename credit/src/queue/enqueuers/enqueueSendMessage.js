@@ -1,4 +1,3 @@
-//const kue = require("kue");
 const queue = require("../../../creditIndex");
 const debug = require("debug")("credit:queue");
 

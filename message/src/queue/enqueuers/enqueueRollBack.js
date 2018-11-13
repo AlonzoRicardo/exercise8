@@ -1,9 +1,4 @@
 const kue = require("kue");
-/* let queue = kue.createQueue({
-  redis: {
-    host: "redis"
-  }
-}); */
 let queue = require('../../../messagesIndex');
 const debug = require("debug")("message:queue");
 

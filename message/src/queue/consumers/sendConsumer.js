@@ -1,5 +1,4 @@
 const kue = require("kue");
-//let queue = kue.createQueue();
 let queue = require('../../../messagesIndex');
 const sendMessage = require("../../controllers/sendMessage");
 
